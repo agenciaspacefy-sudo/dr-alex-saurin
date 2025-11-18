@@ -1,27 +1,41 @@
 "use client";
 
-import { useState } from "react";
-import { Phone, Stethoscope, Apple, CheckCircle, Clock, MapPin, Award, User, Calendar, MessageSquare } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Phone, Stethoscope, Apple, CheckCircle, Clock, MapPin, Award, User, Calendar, MessageSquare, Star } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<"urologia" | "nutrologia" | "feedbacks">("urologia");
   const [showForm, setShowForm] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [formData, setFormData] = useState({
     nomeCompleto: "",
     telefone: "",
     cpf: "",
     idade: "",
-    cidade: "",
-    especialidade: "urologia"
+    cidade: ""
   });
+
+  // Detectar scroll para aplicar transparência
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const whatsappNumber = "5518998201313";
   const whatsappMessage = encodeURIComponent("Olá Dr. Alex Saurin, gostaria de agendar uma consulta.");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const message = `Olá Dr. Alex Saurin, gostaria de fazer um pré-agendamento:\n\n*Nome:* ${formData.nomeCompleto}\n*Telefone:* ${formData.telefone}\n*CPF:* ${formData.cpf}\n*Idade:* ${formData.idade}\n*Cidade:* ${formData.cidade}\n*Especialidade:* ${formData.especialidade === "urologia" ? "Urologia" : "Nutrologia"}`;
+    const message = `Olá Dr. Alex Saurin, gostaria de fazer um pré-agendamento:\\n\\n*Nome:* ${formData.nomeCompleto}\\n*Telefone:* ${formData.telefone}\\n*CPF:* ${formData.cpf}\\n*Idade:* ${formData.idade}\\n*Cidade:* ${formData.cidade}`;
     
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank");
@@ -35,46 +49,56 @@ export default function Home() {
   const urologiaServices = [
     {
       title: "Bioplastia Peniana",
-      description: "Procedimento estético minimamente invasivo para aumento peniano utilizando preenchimento com ácido hialurônico ou PMMA, proporcionando resultados naturais e seguros."
+      description: "Procedimento estético minimamente invasivo para aumento peniano utilizando preenchimento com ácido hialurônico, proporcionando resultados naturais e seguros.",
+      image: "https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/d7339ca8-9388-4c87-8916-959957c062c7.jpg"
     },
     {
       title: "Litíase Renal",
-      description: "Diagnóstico e tratamento de cálculos renais (pedras nos rins) com técnicas modernas, incluindo litotripsia e procedimentos minimamente invasivos para remoção das pedras."
+      description: "Diagnóstico e tratamento de cálculos renais (pedras nos rins) com técnicas modernas, incluindo litotripsia e procedimentos minimamente invasivos para remoção das pedras.",
+      image: "https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/a35faeff-3906-492d-a402-0a2116f39103.png"
     },
     {
       title: "Infertilidade",
-      description: "Investigação e tratamento da infertilidade masculina, incluindo análise seminal, avaliação hormonal e orientação para técnicas de reprodução assistida."
+      description: "Investigação e tratamento da infertilidade masculina, incluindo análise seminal, avaliação hormonal e orientação para técnicas de reprodução assistida.",
+      image: "https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/5f69e829-0b9b-4bba-be0c-4862a48e247f.jpg"
     },
     {
       title: "Disfunções Sexuais",
-      description: "Tratamento especializado para disfunção erétil e ejaculação precoce, com abordagens personalizadas incluindo medicamentos, terapias e orientações para melhorar a qualidade de vida sexual."
+      description: "Tratamento especializado para disfunção erétil e ejaculação precoce, com abordagens personalizadas incluindo medicamentos, terapias e orientações para melhorar a qualidade de vida sexual.",
+      image: "https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/6f2a49c1-be09-443a-b56c-38cacacf948f.png"
     },
     {
       title: "Problemas Urinários",
-      description: "Diagnóstico e tratamento de problemas urinários masculinos e femininos, incluindo incontinência, infecções recorrentes, urgência miccional e dificuldade para urinar."
+      description: "Diagnóstico e tratamento de problemas urinários masculinos e femininos, incluindo incontinência, infecções recorrentes, urgência miccional e dificuldade para urinar.",
+      image: "https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/0ce8b342-1588-4158-834f-d0418ec94c03.png"
     },
     {
       title: "Reposição Hormonal",
-      description: "Avaliação e reposição hormonal masculina (testosterona) para tratamento de andropausa, fadiga, perda de massa muscular e diminuição da libido."
+      description: "Avaliação e reposição hormonal masculina (testosterona) para tratamento de andropausa, fadiga, perda de massa muscular e diminuição da libido.",
+      image: "https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/031bad7e-9d5f-4425-a556-414639379082.jpg"
     }
   ];
 
   const nutrologiaServices = [
     {
       title: "Emagrecimento",
-      description: "Programa personalizado de emagrecimento saudável e sustentável, com avaliação metabólica completa, prescrição de dieta individualizada e acompanhamento contínuo para perda de peso efetiva."
+      description: "Programa personalizado de emagrecimento saudável e sustentável, com avaliação metabólica completa, prescrição de dieta individualizada e acompanhamento contínuo para perda de peso efetiva.",
+      image: "https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/ca3c9bf7-d830-4b0c-a9e5-720cde18f1ba.jpg"
     },
     {
       title: "Hipertrofia (Ganho de Massa Muscular)",
-      description: "Protocolo especializado para ganho de massa muscular com planejamento nutricional estratégico, suplementação adequada e orientações para maximizar os resultados do treino."
+      description: "Protocolo especializado para ganho de massa muscular com planejamento nutricional estratégico, suplementação adequada e orientações para maximizar os resultados do treino.",
+      image: "https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/c8d2113a-1e89-4002-9d97-5dd7f0b7c934.jpg"
     },
     {
       title: "Performance no Esporte",
-      description: "Otimização da performance esportiva através de nutrição especializada, suplementação direcionada e estratégias nutricionais para melhorar rendimento, recuperação e resistência."
+      description: "Otimização da performance esportiva através de nutrição especializada, suplementação direcionada e estratégias nutricionais para melhorar rendimento, recuperação e resistência.",
+      image: "https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/0f7c78da-a3fe-481c-ae2d-b1c548b57684.jpg"
     },
     {
       title: "Reposição de Vitaminas e Minerais",
-      description: "Avaliação e correção de deficiências nutricionais através de exames laboratoriais específicos, com prescrição de suplementação personalizada para restaurar níveis ideais de vitaminas e minerais."
+      description: "Avaliação e correção de deficiências nutricionais através de exames laboratoriais específicos, com prescrição de suplementação personalizada para restaurar níveis ideais de vitaminas e minerais.",
+      image: "https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/2b689a70-4f04-4489-92bc-0f6ae77c03f4.jpg"
     }
   ];
 
@@ -106,25 +130,34 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+    <div className="min-h-screen bg-[#193942]">
       {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">
-              Dr. Alex Saurin
-            </h1>
-            <p className="text-lg sm:text-xl text-gray-600 mt-2">
-              Urologista & Nutrólogo
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-sm text-gray-600">
-              <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-blue-600" />
-                <span>CRM 101.819</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-blue-600" />
-                <span>RQE 23932</span>
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled 
+            ? "bg-white/80 backdrop-blur-md shadow-lg" 
+            : "bg-white shadow-sm"
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div className="flex flex-col items-center gap-3">
+            {/* Title and Info */}
+            <div className="text-center">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">
+                Dr. Alex Saurin
+              </h1>
+              <p className="text-lg sm:text-xl text-gray-600 mt-1">
+                Urologista & Nutrólogo
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-4 mt-3 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <Award className="w-4 h-4 text-blue-600" />
+                  <span>CRM 101.819</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Award className="w-4 h-4 text-blue-600" />
+                  <span>RQE 23932</span>
+                </div>
               </div>
             </div>
           </div>
@@ -132,14 +165,14 @@ export default function Home() {
       </header>
 
       {/* Tabs */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-32">
         <div className="flex gap-2 sm:gap-4 border-b border-gray-200 overflow-x-auto">
           <button
             onClick={() => setActiveTab("urologia")}
             className={`flex items-center gap-2 px-4 sm:px-6 py-4 font-semibold text-base sm:text-lg transition-all duration-300 border-b-4 whitespace-nowrap ${
               activeTab === "urologia"
                 ? "border-blue-600 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                : "border-transparent text-white hover:text-gray-200"
             }`}
           >
             <Stethoscope className="w-5 h-5" />
@@ -150,7 +183,7 @@ export default function Home() {
             className={`flex items-center gap-2 px-4 sm:px-6 py-4 font-semibold text-base sm:text-lg transition-all duration-300 border-b-4 whitespace-nowrap ${
               activeTab === "nutrologia"
                 ? "border-green-600 text-green-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                : "border-transparent text-white hover:text-gray-200"
             }`}
           >
             <Apple className="w-5 h-5" />
@@ -161,7 +194,7 @@ export default function Home() {
             className={`flex items-center gap-2 px-4 sm:px-6 py-4 font-semibold text-base sm:text-lg transition-all duration-300 border-b-4 whitespace-nowrap ${
               activeTab === "feedbacks"
                 ? "border-purple-600 text-purple-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                : "border-transparent text-white hover:text-gray-200"
             }`}
           >
             <MessageSquare className="w-5 h-5" />
@@ -217,14 +250,29 @@ export default function Home() {
             {/* Services */}
             <div className="grid md:grid-cols-2 gap-6">
               {urologiaServices.map((service, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                  <div className="flex items-start gap-3 mb-3">
-                    <CheckCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
-                    <h3 className="text-xl font-bold text-gray-900">{service.title}</h3>
+                <div key={index} className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                  {/* Image */}
+                  {service.image && (
+                    <div className="relative w-full h-48">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                  
+                  {/* Content */}
+                  <div className="p-6">
+                    <div className="flex items-start gap-3 mb-3">
+                      <CheckCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                      <h3 className="text-xl font-bold text-gray-900">{service.title}</h3>
+                    </div>
+                    <p className="text-gray-700 leading-relaxed ml-9">
+                      {service.description}
+                    </p>
                   </div>
-                  <p className="text-gray-700 leading-relaxed ml-9">
-                    {service.description}
-                  </p>
                 </div>
               ))}
             </div>
@@ -235,9 +283,10 @@ export default function Home() {
                 Quando procurar um urologista?
               </h3>
               <p className="text-gray-700 leading-relaxed">
-                Recomenda-se consulta urológica para homens acima de 50 anos (ou 45 anos com histórico familiar), 
-                presença de sintomas urinários, disfunções sexuais, dor ou desconforto na região pélvica, 
-                e para check-ups preventivos regulares.
+                A consulta urológica é indicada para homens de qualquer idade, especialmente em casos de sintomas urinários, dor pélvica, cólica renal, infecções urinárias, doenças sexualmente transmissíveis, disfunções sexuais (como queda de libido, dificuldade de ereção ou ejaculação), além de avaliações preventivas gerais.
+              </p>
+              <p className="text-gray-700 leading-relaxed mt-3">
+                Exames preventivos específicos da próstata são recomendados a partir dos 45 a 50 anos, especialmente para quem possui histórico familiar.
               </p>
             </div>
           </div>
@@ -285,14 +334,27 @@ export default function Home() {
             {/* Services */}
             <div className="grid md:grid-cols-2 gap-6">
               {nutrologiaServices.map((service, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                  <div className="flex items-start gap-3 mb-3">
-                    <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                    <h3 className="text-xl font-bold text-gray-900">{service.title}</h3>
+                <div key={index} className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                  {/* Image */}
+                  <div className="relative w-full h-48">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
-                  <p className="text-gray-700 leading-relaxed ml-9">
-                    {service.description}
-                  </p>
+                  
+                  {/* Content */}
+                  <div className="p-6">
+                    <div className="flex items-start gap-3 mb-3">
+                      <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                      <h3 className="text-xl font-bold text-gray-900">{service.title}</h3>
+                    </div>
+                    <p className="text-gray-700 leading-relaxed ml-9">
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -464,23 +526,6 @@ export default function Home() {
               </div>
             </div>
 
-            <div>
-              <label htmlFor="especialidade" className="block text-sm font-semibold text-gray-700 mb-2">
-                Especialidade *
-              </label>
-              <select
-                id="especialidade"
-                name="especialidade"
-                required
-                value={formData.especialidade}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200 bg-white"
-              >
-                <option value="urologia">Urologia</option>
-                <option value="nutrologia">Nutrologia</option>
-              </select>
-            </div>
-
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
@@ -546,15 +591,31 @@ export default function Home() {
             </p>
           </div>
           
-          <a
-            href="https://www.google.com/search?q=clinica+essence+vita+adamantina"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full justify-center"
-          >
-            <MapPin className="w-6 h-6" />
-            Ver Localização no Google
-          </a>
+          <div className="flex flex-col gap-4">
+            <a
+              href="https://www.google.com/search?q=clinica+essence+vita+adamantina"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full justify-center"
+            >
+              <MapPin className="w-6 h-6" />
+              Ver Localização no Google
+            </a>
+
+            <a
+              href="https://g.page/r/CaZryl0uEDtPEBM/review"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full justify-center"
+            >
+              <Star className="w-6 h-6" />
+              Nos Avalie no Google
+            </a>
+
+            <p className="text-center text-gray-600 text-sm mt-2">
+              Sua avaliação é muito importante para nós
+            </p>
+          </div>
         </div>
       </main>
 
